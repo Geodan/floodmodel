@@ -1,0 +1,10 @@
+anuga.sww2dem(project.outpath+'anuga_output.sww',
+       	outname+'.asc',
+       	quantity=quantityname,
+       	cellsize=0.5,
+       	easting_min=627724,
+       	easting_max=627893,
+       	northing_min=5804634,
+       	northing_max=5804828,
+       	reduction=max,
+       	verbose=False)

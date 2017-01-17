@@ -1,3 +1,4 @@
 tmp
 output
 *.log
+*.pyc
