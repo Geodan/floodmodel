@@ -14,11 +14,11 @@
     },
         {
             "filename":"./tmp/dtm",
-            "output_format":"tif",
+            "gdaldriver":"GTiff",
             "output_type":"mean",
-            "grid_dist_x":".5",
-            "grid_dist_y":".5",
-            "type": "writers.p2g"
+            "resolution":0.5,
+	    "radius":2,
+            "type": "writers.gdal"
         }
     ]
 }
