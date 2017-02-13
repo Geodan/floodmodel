@@ -13,11 +13,11 @@
       "limits":"Classification[2:2]"
     },
         {
-            "filename":"./tmp/dtm",
+            "filename":"./tmp/dtm.mean.tif",
             "gdaldriver":"GTiff",
             "output_type":"mean",
             "resolution":0.5,
-	    "radius":2,
+            "radius":1,
             "type": "writers.gdal"
         }
     ]

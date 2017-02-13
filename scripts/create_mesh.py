@@ -100,7 +100,7 @@ conn = psycopg2.connect(conn_params)
 cur = conn.cursor()
 querystring = """
 WITH blocks AS (
-SELECT ST_SimplifyPreserveTopology(ST_Union(wkb_geometry),0.5) geom
+SELECT ST_SimplifyPreserveTopology(ST_Buffer(ST_Union(wkb_geometry),-1, 'join=mitre mitre_limit=1.0'),0.5) geom
 FROM bgt_import2.waterdeel_2dactueelbestaand
 WHERE ST_Contains(ST_Transform(ST_SetSrid(ST_MakeEnvelope(%s),32631),28992),wkb_geometry)
 )

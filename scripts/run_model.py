@@ -21,7 +21,7 @@ meshname = project.tmppath+'output.msh'
 # Do the domain creation on processor 0
 #------------------------------------------------------------------------------
 print '##################### %i #########################' % myid
-if myid == 0:
+if anuga.myid == 0:
 	domain = anuga.Domain(meshname,use_cache=False,verbose = verbose)
 	inflow = anuga.Inflow(domain, center=(project.center), radius=project.radius, rate=project.rate)
 	domain.forcing_terms.append(inflow)
@@ -31,15 +31,15 @@ else:
 #------------------------------------------------------------------------------
 # Now produce parallel domain
 #------------------------------------------------------------------------------
-#domain = distribute(domain,verbose=verbose)
+domain = anuga.distribute(domain,verbose=verbose)
 
 #domain.set_store_vertices_uniquely(False)
 
-
-# Print some stats about mesh and domain
-print 'Number of triangles = ', len(domain)
-print 'The extent is ', domain.get_extent()
-#print domain.statistics()
+if anuga.myid == 0:
+	# Print some stats about mesh and domain
+	print 'Number of triangles = ', len(domain)
+	print 'The extent is ', domain.get_extent()
+	#print domain.statistics()
 #------------------------------------------------------------------------------
 # Setup parameters of computational domain
 #------------------------------------------------------------------------------
@@ -79,9 +79,9 @@ Br = anuga.Reflective_boundary(domain)
 
 domain.set_boundary({
 	'top': Bs,
-	'east': Br,
-	'bottom': Br,
-	'west': Bd,
+	'east': Bs,
+	'bottom': Bs,
+	'west': Bs,
 	'interior': Br,
 	'exterior': Br})
 #------------------------------------------------------------------------------
@@ -115,7 +115,7 @@ for t in domain.evolve(yieldstep=project.yieldstep, finaltime=tend):
 	print domain.timestepping_statistics()
 	
 	
-#domain.sww_merge(delete_old=True)
+domain.sww_merge(verbose=True)
 
 
 
@@ -127,4 +127,4 @@ for t in domain.evolve(yieldstep=project.yieldstep, finaltime=tend):
 #	print domain.boundary_statistics(tags='east')
 if myid == 0:
 	print'.That took %.2f seconds' %(time.time()-t0)
-#finalize()
+anuga.finalize()
