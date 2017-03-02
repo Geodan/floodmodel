@@ -2,3 +2,7 @@ tmp
 output
 *.log
 *.pyc
+pypar
+.msh
+.sww
+.geojson
